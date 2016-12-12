@@ -32,7 +32,16 @@ namespace WCExp.Test
             WindsorContainer container = SetupContainer();
 
             var root = container.Resolve<IRoot>();
-            var cmd = root.CommandManager.CreateCommand<IRepository<Person>, List<Person>>("GetAllCommand");
+            var cmd = root.CommandManager.CreateCommand<Person, List<Person>>("GetAllCommand");
+            try
+            {
+                cmd.ExecuteAction();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                throw;
+            }
 
 
 
@@ -46,8 +55,11 @@ namespace WCExp.Test
             container.Register(Component.For<ICommandManager>().ImplementedBy<CommandManager>());
             container.Register(Component.For(typeof(ICommand<,>)).ImplementedBy(typeof(DoNothingCommand<,>)).Named("DoNothingCommand"));
             container.Register(Component.For(typeof(ICommand<,>)).ImplementedBy(typeof(GetAllCommand<,>)).Named("GetAllCommand"));
+
             container.Register(Component.For<Person>().ImplementedBy<Person>());
-            container.Register(Component.For(typeof(IRepository<Person>)).ImplementedBy(typeof(HouseRepository)));
+            container.Register(Component.For<IRepository<Person>>().ImplementedBy<HouseRepository>());
+            container.Register(Component.For<ICollection<Person>>().ImplementedBy<List<Person>>());
+
             return container;
 
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Castle.Windsor;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,8 +8,17 @@ using WindsorCastleExperiments.Interfaces;
 
 namespace WCExp.Test
 {
-    public class GetAllCommand<TRepo,TOut> : ICommand<TRepo, TOut> where TRepo :
+    public class GetAllCommand<Tin, TOut> : ICommand<Tin, TOut>
+        where Tin : class
+        where TOut : List<Tin>
     {
+        private WindsorContainer _container;
+
+
+        public GetAllCommand(WindsorContainer container)
+        {
+            _container = container;
+        }
         public bool HasExecuted
         {
             get
@@ -35,36 +45,27 @@ namespace WCExp.Test
             }
         }
 
-        public List<TEntity> Result
+        public TOut Result
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get;set;
         }
-
-        public IRepository<TEntity> Target
+       
+        public Tin Target
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get; set;
         }
 
         public bool ExecuteAction()
         {
-            Result = Target.GetAll();
+            var repo = _container.Resolve<IRepository<Tin>>();
+            Result =(TOut) repo.GetAll();
             return true;
+
+        }
+
+        public void ExecuteAction<T1, T2>()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -56,5 +56,10 @@ namespace WindsorCastleExperiments.Implementations
 
             return true;
         }
+
+        public void ExecuteAction<T1, T2>()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
