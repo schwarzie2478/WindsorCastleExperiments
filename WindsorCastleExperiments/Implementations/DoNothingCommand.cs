@@ -7,8 +7,12 @@ using WindsorCastleExperiments.Interfaces;
 
 namespace WindsorCastleExperiments.Implementations
 {
-    public class DoNothingCommand<Tin, Tout> : ICommand<Tin, Tout>
+    public class DoNothingCommand<Tin, Tout> : CommandBase, ICommand<Tin, Tout>
     {
+        public DoNothingCommand(IRoot root):base(root)
+        {
+
+        }
         public bool HasExecuted
         {
             get; set;

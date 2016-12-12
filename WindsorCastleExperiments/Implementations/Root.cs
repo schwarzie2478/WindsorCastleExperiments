@@ -13,5 +13,25 @@ namespace WindsorCastleExperiments.Implementations
         {
             get; set;
         }
+
+        public IGlobalParameterTable GlobalParameterTable
+        {
+            get; set;
+        }
+
+        public IIOMapper IOMapper
+        {
+            get; set;
+        }
+
+        public IObjectBuilder ObjectBuilder
+        {
+            get; set;
+        }
+
+        public IResourceManager ResourceManager
+        {
+            get; set;
+        }
     }
 }

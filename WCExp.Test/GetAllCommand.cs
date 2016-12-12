@@ -4,20 +4,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WindsorCastleExperiments.Implementations;
 using WindsorCastleExperiments.Interfaces;
 
 namespace WCExp.Test
 {
-    public class GetAllCommand<Tin, TOut> : ICommand<Tin, TOut>
+    public class GetAllCommand<Tin, TOut> :CommandBase, ICommand<Tin, TOut>
         where Tin : class
         where TOut : List<Tin>
     {
-        private WindsorContainer _container;
+        private IRepository<Tin> _repo;
+  
 
-
-        public GetAllCommand(WindsorContainer container)
+        public GetAllCommand(IRoot root, IRepository<Tin> repo):base(root)
         {
-            _container = container;
+            _repo = repo;
         }
         public bool HasExecuted
         {
@@ -56,9 +57,8 @@ namespace WCExp.Test
         }
 
         public bool ExecuteAction()
-        {
-            var repo = _container.Resolve<IRepository<Tin>>();
-            Result =(TOut) repo.GetAll();
+        {        
+            Result =(TOut)_repo.GetAll();
             return true;
 
         }

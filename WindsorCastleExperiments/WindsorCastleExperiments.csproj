@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlternativeImplementations\DoAlmostNothingCommand.cs" />
+    <Compile Include="Implementations\CommandBase.cs" />
     <Compile Include="Implementations\CommandManager.cs" />
     <Compile Include="Implementations\DoNothingCommand.cs" />
     <Compile Include="Implementations\DoWorkCommand.cs" />
@@ -58,6 +59,10 @@
     <Compile Include="Interfaces\ICommand.cs" />
     <Compile Include="Interfaces\ICommandManager.cs" />
     <Compile Include="Interfaces\ICommand´2.cs" />
+    <Compile Include="Interfaces\IGlobalParameterTable.cs" />
+    <Compile Include="Interfaces\IIOMapper.cs" />
+    <Compile Include="Interfaces\IObjectBuilder.cs" />
+    <Compile Include="Interfaces\IResourceManager.cs" />
     <Compile Include="Interfaces\IRoot.cs" />
     <Compile Include="Interfaces\IWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
