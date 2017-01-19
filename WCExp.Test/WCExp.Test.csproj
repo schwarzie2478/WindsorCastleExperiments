@@ -59,8 +59,11 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="BaseRepository.cs" />
     <Compile Include="CastleTest.cs" />
+    <Compile Include="Cat.cs" />
     <Compile Include="GetAllCommand.cs" />
+    <Compile Include="GetOneCommand.cs" />
     <Compile Include="HouseRepository.cs" />
     <Compile Include="IHouseRepository.cs" />
     <Compile Include="IRepository.cs" />

@@ -49,14 +49,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlternativeImplementations\DoAlmostNothingCommand.cs" />
+    <Compile Include="Implementations\Command2Factory.cs" />
     <Compile Include="Implementations\CommandBase.cs" />
     <Compile Include="Implementations\CommandManager.cs" />
     <Compile Include="Implementations\DoNothingCommand.cs" />
     <Compile Include="Implementations\DoWorkCommand.cs" />
+    <Compile Include="Implementations\GetAllCommand.cs" />
     <Compile Include="Implementations\JustPassAlong.cs" />
     <Compile Include="Implementations\ReverseOrder.cs" />
     <Compile Include="Implementations\Root.cs" />
+    <Compile Include="Implementations\SimpleCommand.cs" />
     <Compile Include="Interfaces\ICommand.cs" />
+    <Compile Include="Interfaces\ICommand2Factory.cs" />
     <Compile Include="Interfaces\ICommandManager.cs" />
     <Compile Include="Interfaces\ICommand´2.cs" />
     <Compile Include="Interfaces\IGlobalParameterTable.cs" />

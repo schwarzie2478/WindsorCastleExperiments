@@ -2,8 +2,10 @@
 
 namespace WCExp.Test
 {
-    public interface IRepository<TEntity> where TEntity:class
+    public interface IRepository<TEntity,TKey> where TEntity:class
+        where TKey :struct
     {
         List<TEntity> GetAll();
+        TEntity Get(TKey key);
     }
 }

@@ -9,14 +9,14 @@ using WindsorCastleExperiments.Interfaces;
 
 namespace WCExp.Test
 {
-    public class GetAllCommand<Tin, TOut> :CommandBase, ICommand<Tin, TOut>
-        where Tin : class
-        where TOut : List<Tin>
+    public class GetOneCommand<Tin, TOut> : CommandBase, ICommand<Tin, TOut>
+        where Tin : struct
+        where TOut : class
     {
-        private IRepository<Tin,int> _repo;
-  
+        private IRepository<TOut, Tin> _repo;
 
-        public GetAllCommand( IRepository<Tin,int> repo):base()
+
+        public GetOneCommand(IRepository<TOut, Tin> repo) : base()
         {
             _repo = repo;
         }
@@ -48,17 +48,17 @@ namespace WCExp.Test
 
         public TOut Result
         {
-            get;set;
+            get; set;
         }
-       
+
         public Tin Target
         {
             get; set;
         }
 
         public bool ExecuteAction()
-        {        
-            Result =(TOut)_repo.GetAll();
+        {
+            Result = _repo.Get(Target);
             return true;
 
         }

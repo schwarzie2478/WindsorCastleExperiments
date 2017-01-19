@@ -4,21 +4,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WindsorCastleExperiments.Implementations;
+
 using WindsorCastleExperiments.Interfaces;
 
-namespace WCExp.Test
+namespace WindsorCastleExperiments.Implementations
 {
     public class GetAllCommand<Tin, TOut> :CommandBase, ICommand<Tin, TOut>
         where Tin : class
         where TOut : List<Tin>
     {
-        private IRepository<Tin,int> _repo;
+
   
 
-        public GetAllCommand( IRepository<Tin,int> repo):base()
+        public GetAllCommand( ):base()
         {
-            _repo = repo;
         }
         public bool HasExecuted
         {
@@ -58,7 +57,7 @@ namespace WCExp.Test
 
         public bool ExecuteAction()
         {        
-            Result =(TOut)_repo.GetAll();
+            Result =(TOut) new List<Tin>();
             return true;
 
         }

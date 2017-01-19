@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WCExp.Test
 {
-    public class HouseRepository : BaseRepository<Person,int>
+    public class Cat
     {
     }
 }

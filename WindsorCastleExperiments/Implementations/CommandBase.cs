@@ -9,11 +9,11 @@ namespace WindsorCastleExperiments.Implementations
 {
     public class CommandBase
     {
-        protected IRoot _root;
+        public IRoot Root {
+            get; set; }
 
-        public CommandBase(IRoot root)
+        public CommandBase()
         {
-            _root = root;
         }
     }
 }

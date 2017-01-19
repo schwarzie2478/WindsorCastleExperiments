@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +9,7 @@ namespace WindsorCastleExperiments.Implementations
 {
     public class DoNothingCommand<Tin, Tout> : CommandBase, ICommand<Tin, Tout>
     {
-        public DoNothingCommand(IRoot root):base(root)
+        public DoNothingCommand():base()
         {
 
         }
@@ -26,7 +26,7 @@ namespace WindsorCastleExperiments.Implementations
 
 
 
-        Tout ICommand<Tin, Tout>.Result
+        public Tout Result
         {
             get
             {
@@ -39,7 +39,7 @@ namespace WindsorCastleExperiments.Implementations
             }
         }
 
-        Tin ICommand<Tin, Tout>.Target
+        public Tin Target
         {
             get
             {
