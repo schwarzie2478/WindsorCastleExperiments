@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WindsorCastleExperiments.Interfaces
+namespace LoadTestAssembly
 {
     public interface IWork
     {
-        List<string> Input { get; set; }
-        List<string> DoWork();
+        string FirstName { get; }
+        void WorkABit();
+        void WorkALot();
     }
 }

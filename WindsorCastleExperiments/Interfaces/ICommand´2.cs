@@ -12,7 +12,8 @@ namespace WindsorCastleExperiments.Interfaces
         TOut Result { get; set; }
         bool IsSucceeded { get; set; }
         bool HasExecuted { get; set; }
-        bool ExecuteAction();
-        void ExecuteAction<T1, T2>();
+        bool ExecuteAction(Tin input);
+        bool ExecuteAction<T1, T2>(T1 input, out T2 output);
+
     }
 }

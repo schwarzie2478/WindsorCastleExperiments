@@ -9,14 +9,14 @@ using WindsorCastleExperiments.Interfaces;
 
 namespace WCExp.Test
 {
-    public class GetOneCommand<Tin, TOut> : CommandBase, ICommand<Tin, TOut>
-        where Tin : struct
-        where TOut : class
+    public class GetOneCommand<TKey, TEntity> : CommandBase, ICommand<TKey, TEntity>
+        where TKey : struct
+        where TEntity : class
     {
-        private IRepository<TOut, Tin> _repo;
+        private IRepository<TEntity, TKey> _repo;
 
 
-        public GetOneCommand(IRepository<TOut, Tin> repo) : base()
+        public GetOneCommand(IRepository<TEntity, TKey> repo) : base()
         {
             _repo = repo;
         }
@@ -46,12 +46,12 @@ namespace WCExp.Test
             }
         }
 
-        public TOut Result
+        public TEntity Result
         {
             get; set;
         }
 
-        public Tin Target
+        public TKey Target
         {
             get; set;
         }
@@ -63,7 +63,18 @@ namespace WCExp.Test
 
         }
 
+        public bool ExecuteAction(TKey input)
+        {
+            Result = _repo.Get(input);
+            return true;
+        }
+
         public void ExecuteAction<T1, T2>()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool ExecuteAction<T1, T2>(T1 input, out T2 output)
         {
             throw new NotImplementedException();
         }

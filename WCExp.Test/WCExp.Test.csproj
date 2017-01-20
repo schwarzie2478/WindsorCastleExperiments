@@ -65,6 +65,7 @@
     <Compile Include="GetAllCommand.cs" />
     <Compile Include="GetOneCommand.cs" />
     <Compile Include="HouseRepository.cs" />
+    <Compile Include="IEntity.cs" />
     <Compile Include="IHouseRepository.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="Person.cs" />
@@ -75,6 +76,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\LoadTestAssembly\LoadTestAssembly.csproj">
+      <Project>{55eb83d0-6366-4f07-bb02-7410321cd514}</Project>
+      <Name>LoadTestAssembly</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WindsorCastleExperiments\WindsorCastleExperiments.csproj">
       <Project>{e479ea55-aef7-41f2-a9a4-b638430ea0a4}</Project>
       <Name>WindsorCastleExperiments</Name>

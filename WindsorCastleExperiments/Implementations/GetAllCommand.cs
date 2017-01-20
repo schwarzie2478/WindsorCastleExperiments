@@ -62,7 +62,17 @@ namespace WindsorCastleExperiments.Implementations
 
         }
 
+        public bool ExecuteAction(Tin input)
+        {
+            throw new NotImplementedException();
+        }
+
         public void ExecuteAction<T1, T2>()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool ExecuteAction<T1, T2>(T1 input, out T2 output)
         {
             throw new NotImplementedException();
         }

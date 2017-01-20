@@ -9,14 +9,14 @@ using WindsorCastleExperiments.Interfaces;
 
 namespace WCExp.Test
 {
-    public class GetAllCommand<Tin, TOut> :CommandBase, ICommand<Tin, TOut>
-        where Tin : class
-        where TOut : List<Tin>
+    public class GetAllCommand<TEntity,TKey> :CommandBase, ICommand<object, List<TEntity>>
+        where TEntity : class,IEntity<TKey>
+        where TKey : struct
     {
-        private IRepository<Tin,int> _repo;
+        private IRepository<TEntity, TKey> _repo;
   
 
-        public GetAllCommand( IRepository<Tin,int> repo):base()
+        public GetAllCommand( IRepository<TEntity, TKey> repo):base()
         {
             _repo = repo;
         }
@@ -46,24 +46,52 @@ namespace WCExp.Test
             }
         }
 
-        public TOut Result
+
+        public List<TEntity> Result
         {
-            get;set;
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
         }
-       
-        public Tin Target
+
+        public object Target
         {
-            get; set;
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public bool ExecuteAction()
-        {        
-            Result =(TOut)_repo.GetAll();
+        {
+            Result = _repo.GetAll();
             return true;
 
         }
 
+        public bool ExecuteAction(object input)
+        {
+            Result = _repo.GetAll();
+            return true;
+        }
+
         public void ExecuteAction<T1, T2>()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool ExecuteAction<T1, T2>(T1 input, out T2 output)
         {
             throw new NotImplementedException();
         }

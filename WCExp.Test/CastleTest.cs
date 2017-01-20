@@ -8,12 +8,68 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using Castle.Facilities.TypedFactory;
 using System.Reflection;
+using Castle.Windsor.Installer;
+using LoadTestAssembly;
 
 namespace WCExp.Test
 {
     [TestClass]
     public class CastleTest
     {
+        [TestMethod]
+        public void TestContainer()
+        {
+            var container = SetupContainer();
+
+            //DefaultNamingConventions
+            var worker = container.Resolve<IWork>("LoadTestAssembly.StandardWorker");
+            worker.WorkABit();
+
+            //ICommand`2 default registrations and 
+            var cmd =  container.Resolve<ICommand<Func<int,bool>, bool>>("WindsorCastleExperiments.Implemenations.DoNothingCommand`2");
+            cmd.ExecuteAction( i =>  i == 0);
+        }
+        [TestMethod]
+        public void TestChangeRegistration()
+        {
+            var container = SetupContainer();
+
+            //override StandardWorker to point to BusyWorker
+
+            //container.Register(
+            //    Component
+            //    .For<IWork>().OverWrite()
+            //    .ImplementedBy<LoadTestAssembly.BusyWorker>()
+            //    .Named("LoadTestAssembly.StandardWorker"));
+
+
+            //worker should be BusyWorker now
+            var worker = container.Resolve<IWork>("LoadTestAssembly.StandardWorker");
+            worker.WorkABit();
+            var uworker = container.Resolve<IWork>("LoadTestAssembly.UnknownWorker");
+            uworker.WorkABit();
+
+            
+        }
+
+        private void Kernel_ComponentRegistered(string key, Castle.MicroKernel.IHandler handler)
+        {
+            var  para = new object[1];
+            para[0] = key;
+            Debug.WriteLine("Registering {0}",para);
+        }
+
+        [TestMethod]
+        public void TestTypes()
+        {
+            var type1 = Type.GetType("WindsorCastleExperiments.Implementations.DoNothingCommand`2, WindsorCastleExperiments");
+            var type2 = typeof(WindsorCastleExperiments.Implementations.DoNothingCommand<,>);
+            if(type1.Equals(type2))
+            {
+                return;
+            }
+            Assert.Fail("Types differ");
+        }
         [TestMethod]
         public void TestMethod1()
         {
@@ -38,7 +94,7 @@ namespace WCExp.Test
             var cmd2 = root.CommandManager.CreateCommand<int, Cat>("GetOneCatCommand");
             try
             {
-                cmd.ExecuteAction();
+                var cat = root.CommandManager.ExecuteCommand<int, Cat>(cmd2, 0);
             }
             catch (Exception ex)
             {
@@ -52,10 +108,10 @@ namespace WCExp.Test
             WindsorContainer container = SetupContainer();
 
              var root = container.Resolve<IRoot>();
-            var cmd = root.CommandManager.CreateCommand<Person, List<Person>>("GetAll§Command");
+            var cmd = root.CommandManager.CreateCommand<object, List<Person>>("GetAll§Command");
             try
             {
-                cmd.ExecuteAction();
+                cmd.ExecuteAction(0);
             }
             catch (Exception ex)
             {
@@ -104,18 +160,23 @@ namespace WCExp.Test
 
         }
                                                   
-        private static WindsorContainer SetupContainer()
+        private  WindsorContainer SetupContainer()
         {
             var container = new WindsorContainer();
+            container.Kernel.ComponentRegistered += Kernel_ComponentRegistered;
             container.AddFacility<TypedFactoryFacility>();
+            container.Install(FromAssembly.Containing<IWork>());
 
-    //        container.Register(
-    //Classes
-    //    .FromAssembly(Assembly.GetExecutingAssembly())
-    //    .Where(Component.IsInSameNamespaceAs<ICommand>())
-    //    .WithService.FirstInterface()
-    //    .Unless(t => typeof(ICommand<,>).IsAssignableFrom(t)));
-                
+            container.Kernel.AddHandlerSelector(new HandlerCommandSelector("LoadTestAssembly.StandardWorker", "LoadTestAssembly.BusyWorker"));
+            container.Kernel.AddHandlerSelector(new HandlerCommandSelector("LoadTestAssembly.UnknownWorker", "LoadTestAssembly.LazyWorker"));
+
+            //        container.Register(
+            //Classes
+            //    .FromAssembly(Assembly.GetExecutingAssembly())
+            //    .Where(Component.IsInSameNamespaceAs<ICommand>())
+            //    .WithService.FirstInterface()
+            //    .Unless(t => typeof(ICommand<,>).IsAssignableFrom(t)));
+
 
             container.Register(Component.For<WindsorContainer>().Instance(container));
             container.Register(Component.For<IRoot>().ImplementedBy<Root>());
@@ -128,8 +189,12 @@ namespace WCExp.Test
             container.Register(Component.For(typeof(ICommand<,>)).ImplementedBy(Type.GetType("WCExp.Test.GetAllCommand`2")).Named("GetAll§Command"));
             container.Register(Component.For(typeof(ICommand<,>)).ImplementedBy(Type.GetType("WCExp.Test.GetOneCommand`2")).Named("GetOnePersonCommand"));
             container.Register(Component.For(typeof(ICommand<,>)).ImplementedBy(Type.GetType("WCExp.Test.GetOneCommand`2")).Named("GetOneCatCommand"));
-            container.Register(Component.For(typeof(ICommand<,>)).ImplementedBy(typeof(WindsorCastleExperiments.Implementations.DoNothingCommand<,>)).Named("DoNothingCommand"));
-            container.Register(Component.For(typeof(ICommand<,>)).ImplementedBy(typeof(WindsorCastleExperiments.Implementations.GetAllCommand<,>)).Named("GetAllCommandOriginal"));
+
+            //Registering with typeof
+            container.Register(Component.For(typeof(ICommand<,>)).ImplementedBy(typeof(WindsorCastleExperiments.Implementations.DoNothingCommand<,>)));
+            //Registering with Type.GetTypecontainer.Register(Component.For(typeof(ICommand<,>)).ImplementedBy(typeof(WindsorCastleExperiments.Implementations.DoNothingCommand<,>)).Named("DoNothingCommand"));
+            var type = Type.GetType("WindsorCastleExperiments.Implementations.GetAllCommand`2, WindsorCastleExperiments");
+            container.Register(Component.For(typeof(ICommand<,>)).ImplementedBy(type).Named("GetAllCommandOriginal"));
 
             // tell Windsor that it should generate factory for me
             container.Register(Component.For<ICommand2Factory>()

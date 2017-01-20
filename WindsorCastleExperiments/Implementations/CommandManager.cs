@@ -28,10 +28,10 @@ namespace WindsorCastleExperiments.Implementations
 
         public Tout ExecuteCommand<Tin, Tout>(ICommand<Tin, Tout> command, Tin tin)
         {
-            command.Target = tin;
+            
             try
             {
-                command.ExecuteAction();
+                command.ExecuteAction(tin);
             }
             catch (Exception)
             {

@@ -6,7 +6,21 @@ using System.Threading.Tasks;
 
 namespace WCExp.Test
 {
-    public class HouseRepository : BaseRepository<Person,int>
+    public class IntegerRepository<TEntity> : IRepository<TEntity, int> where TEntity :class 
     {
+        public IntegerRepository()
+        {
+
+        }
+
+        public TEntity Get(int key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<TEntity> GetAll()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
