@@ -11,7 +11,7 @@ namespace WCExp.Test
 {
     public class GetOneCommand<TKey, TEntity> : CommandBase, ICommand<TKey, TEntity>
         where TKey : struct
-        where TEntity : class
+        where TEntity : class, IExtra
     {
         private IRepository<TEntity, TKey> _repo;
 

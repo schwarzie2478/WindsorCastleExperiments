@@ -66,6 +66,7 @@
     <Compile Include="GetOneCommand.cs" />
     <Compile Include="HouseRepository.cs" />
     <Compile Include="IEntity.cs" />
+    <Compile Include="IExtra.cs" />
     <Compile Include="IHouseRepository.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="Person.cs" />

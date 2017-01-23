@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlternativeImplementations\DoAlmostNothingCommand.cs" />
+    <Compile Include="Extentions\CommandExtentions.cs" />
     <Compile Include="Implementations\Command2Factory.cs" />
     <Compile Include="Implementations\CommandBase.cs" />
     <Compile Include="Implementations\CommandManager.cs" />
